@@ -1,7 +1,7 @@
 Name MainLight
 light_type 0
 In_Out_Angles 15 35
-Position_xyz 686 2170 185
+Position_xyz 686 3545 185
 Direction 0 -1 1
 Attenuation_xyz 0 9.23597e-06 2.2847e-07
 Diffuse_rgbw 1 1 1 1
@@ -54,3 +54,11 @@ Direction 0 0 0
 Attenuation_xyz 0 0.0001 2.1e-05
 Diffuse_rgbw 0.64 0.027 0.9 1
 on_off 0
+Name xwinglight
+light_type 1
+In_Out_Angles 5 15
+Position_xyz -675 40 520
+Direction 0 0 0
+Attenuation_xyz 0 0.0001 2.1e-05
+Diffuse_rgbw 0.064 0.04 0.8 0
+on_off 1

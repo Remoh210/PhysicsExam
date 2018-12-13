@@ -27,14 +27,17 @@
 
 #include "DebugRenderer/cDebugRenderer.h"
 #include "cLightHelper.h"
-
+//typedef glm::vec3 Vector;
+//typedef glm::vec3 Point;
+void MakePath(double deltaTime);
 GLuint program;
 cDebugRenderer* g_pDebugRendererACTUAL = NULL;
 iDebugRenderer* g_pDebugRenderer = NULL;
 cLuaBrain* p_LuaScripts = NULL;
 cCommandGroup sceneCommandGroup("SceneCG");
 int cou;
-std::vector<cAABB::sAABB_Triangle> vec_cur_AABB_tris;
+std::vector<cAABB::sAABB_Triangle> vec_cur_AABB_tris1;
+std::vector<cAABB::sAABB_Triangle> vec_cur_AABB_tris2;
 void UpdateWindowTitle(void);
 double currentTime = 0;
 double deltaTime = 0;
@@ -43,7 +46,7 @@ void DoPhysicsUpdate( double deltaTime,
 					  std::vector< cMeshObject* > &vec_pObjectsToDraw );
 bool b_landingMode = false;
 bool b_debugMode = false;
-
+void AABBB_positioning(cMeshObject* obj, cMeshObject* pter, std::vector<cAABB::sAABB_Triangle> &vec_cur_AABB_tris);
 std::vector< cMeshObject* > vec_pObjectsToDraw;
 
 // To the right, up 4.0 units, along the x axis
@@ -157,6 +160,7 @@ int main(void)
 		std::cout << pTheShaderManager->getLastError() << std::endl;
 	}
 
+	
 
 	// Load the uniform location values (some of them, anyway)
 	cShaderManager::cShaderProgram* pSP = ::pTheShaderManager->pGetShaderProgramFromFriendlyName("BasicUberShader");
@@ -212,54 +216,54 @@ int main(void)
 	LoadModelsIntoScene(::vec_pObjectsToDraw);
 
 	
-	cMeshObject* pTerrain = findObjectByFriendlyName("terrain");
-	sModelDrawInfo terrainMeshInfo;
-	terrainMeshInfo.meshFileName = pTerrain->meshName;
-	::g_pTheVAOMeshManager->FindDrawInfoByModelName(terrainMeshInfo);
+	//cMeshObject* pTerrain = findObjectByFriendlyName("islands");
+	//sModelDrawInfo terrainMeshInfo;
+	//terrainMeshInfo.meshFileName = pTerrain->meshName;
+	//::g_pTheVAOMeshManager->FindDrawInfoByModelName(terrainMeshInfo);
 
-	for (int i = 0; i < 5; i++)
-	{
-		sPlyVertex randVert = terrainMeshInfo.pVerticesFromFile[rand() % terrainMeshInfo.numberOfVertices];
-		cMeshObject* moonBase = new cMeshObject();
-		moonBase->position = glm::vec3(randVert.x, randVert.y, randVert.z);
-		moonBase->setDiffuseColour(glm::vec3(0.0f, 0.0f, 0.0f));
-		moonBase->friendlyName = "base";
-		moonBase->meshName = "moon_base.ply";
-		//moonBase->bIsWireFrame = true;
-		//moonBase->bDontLight = true;
-		moonBase->bIsVisible = true;
-		//float scale = 1.0f;
-		//moonBase->nonUniformScale = glm::vec3(scale, scale, scale);
-		moonBase->bIsUpdatedByPhysics = true;
-		sTextureInfo moonTex;
-		moonTex.strength = 1.0f;
-		moonTex.name = "moon_baseTex.bmp";
-		moonBase->vecTextures.push_back(moonTex);
-		float scale = 10.0f;
-		moonBase->pTheShape = new sSphere(scale);
-		moonBase->shapeType = cMeshObject::SPHERE;
-		vec_pObjectsToDraw.push_back(moonBase);
-
-
-
-
-		cMeshObject* pSphereNose = new cMeshObject();
-		pSphereNose->setDiffuseColour(glm::vec3(0.0f, 1.0f, 0.0f));
-		pSphereNose->friendlyName = "debugmoon";
-		pSphereNose->meshName = "Sphere_320.ply";
-		pSphereNose->bIsWireFrame = true;
-		pSphereNose->bDontLight = true;
-		pSphereNose->bIsVisible = false;
-		pSphereNose->nonUniformScale = glm::vec3(scale, scale, scale);
-		pSphereNose->position = moonBase->position;
-		pSphereNose->bIsUpdatedByPhysics = false;
-		pSphereNose->bIsDebug = true;
-		//pSphereNose->pDebugRenderer = ::g_pDebugRenderer;
-		vec_pObjectsToDraw.push_back(pSphereNose);
+	//for (int i = 0; i < 5; i++)
+	//{
+	//	sPlyVertex randVert = terrainMeshInfo.pVerticesFromFile[rand() % terrainMeshInfo.numberOfVertices];
+	//	cMeshObject* moonBase = new cMeshObject();
+	//	moonBase->position = glm::vec3(randVert.x, randVert.y, randVert.z);
+	//	moonBase->setDiffuseColour(glm::vec3(0.0f, 0.0f, 0.0f));
+	//	moonBase->friendlyName = "base";
+	//	moonBase->meshName = "moon_base.ply";
+	//	//moonBase->bIsWireFrame = true;
+	//	//moonBase->bDontLight = true;
+	//	moonBase->bIsVisible = true;
+	//	//float scale = 1.0f;
+	//	//moonBase->nonUniformScale = glm::vec3(scale, scale, scale);
+	//	moonBase->bIsUpdatedByPhysics = true;
+	//	sTextureInfo moonTex;
+	//	moonTex.strength = 1.0f;
+	//	moonTex.name = "moon_baseTex.bmp";
+	//	moonBase->vecTextures.push_back(moonTex);
+	//	float scale = 10.0f;
+	//	moonBase->pTheShape = new sSphere(scale);
+	//	moonBase->shapeType = cMeshObject::SPHERE;
+	//	vec_pObjectsToDraw.push_back(moonBase);
 
 
 
-	}
+
+	//	cMeshObject* pSphereNose = new cMeshObject();
+	//	pSphereNose->setDiffuseColour(glm::vec3(0.0f, 1.0f, 0.0f));
+	//	pSphereNose->friendlyName = "debugmoon";
+	//	pSphereNose->meshName = "Sphere_320.ply";
+	//	pSphereNose->bIsWireFrame = true;
+	//	pSphereNose->bDontLight = true;
+	//	pSphereNose->bIsVisible = false;
+	//	pSphereNose->nonUniformScale = glm::vec3(scale, scale, scale);
+	//	pSphereNose->position = moonBase->position;
+	//	pSphereNose->bIsUpdatedByPhysics = false;
+	//	pSphereNose->bIsDebug = true;
+	//	//pSphereNose->pDebugRenderer = ::g_pDebugRenderer;
+	//	vec_pObjectsToDraw.push_back(pSphereNose);
+
+
+
+	//}
 
 
 	LoadTerrainAABB();
@@ -369,45 +373,52 @@ int main(void)
 	cLightHelper* pLightHelper = new cLightHelper();
 
 	
-
+	
 	//Reload from the file
 	//saveModelInfo("Models.txt", vec_pObjectsToDraw);
 	//saveLightInfo("lights.txt", LightManager->vecLights);
 	//loadModels("Models.txt", vec_pObjectsToDraw);
 	loadLights("lights2.txt", LightManager->vecLights);
 	loadCameraInfo("camera2.txt");
+	camera.b_controlledByScript = true;
+	camera.SetViewMatrix(glm::lookAt(camera.Position, findObjectByFriendlyName("islands")->position, glm::vec3(0.0f, 1.0f, 0.0f)));
 	//HACK; TODO save and load camera look at
 	//camera.b_controlledByScript = true;
 	//camera.SetViewMatrix(glm::lookAt(camera.Position, glm::vec3(285.0f, 245.0f, 825.0f), camera.WorldUp));
 	
-	camera.b_controlledByScript = true;
-	//COMMANDS
-	cFollowObjectCommand* newCommand = new cFollowObjectCommand();
 
-	cMeshObject* p_camObj = new cMeshObject();
-	p_camObj->friendlyName = "cameraObj";
-	p_camObj->position = camera.Position;
 
-	std::vector<sNVPair> vecInitValues;
+	//	//COMMANDS
 
-	sNVPair ObjectToMove;				ObjectToMove.pMeshObj = p_camObj;
-	sNVPair IdealRelPos;				IdealRelPos.v3Value = glm::vec3(0.0f, 1.0f, 0.0f);
-	sNVPair minDistance;				minDistance.fValue = 8;
-	sNVPair maxSpeedDistance;			maxSpeedDistance.fValue = 30;
-	sNVPair maxSpeed;					maxSpeed.fValue = 100;
-	sNVPair TargetObject;				TargetObject.pMeshObj = findObjectByFriendlyName("xwing");
-	sNVPair Time;						Time.fValue = 0;
+	//camera.b_controlledByScript = true;
+	//
 
-	vecInitValues.push_back(ObjectToMove);
-	vecInitValues.push_back(IdealRelPos);
-	vecInitValues.push_back(minDistance);
-	vecInitValues.push_back(maxSpeedDistance);
-	vecInitValues.push_back(maxSpeed);
-	vecInitValues.push_back(TargetObject);
-	vecInitValues.push_back(Time);
+	//cFollowObjectCommand* newCommand = new cFollowObjectCommand();
 
-	newCommand->Initialize(vecInitValues);
-	sceneCommandGroup.vecCommands.push_back(newCommand);
+	//cMeshObject* p_camObj = new cMeshObject();
+	//p_camObj->friendlyName = "cameraObj";
+	//p_camObj->position = camera.Position;
+
+	//std::vector<sNVPair> vecInitValues;
+
+	//sNVPair ObjectToMove;				ObjectToMove.pMeshObj = p_camObj;
+	//sNVPair IdealRelPos;				IdealRelPos.v3Value = glm::vec3(0.0f, 1.0f, 0.0f);
+	//sNVPair minDistance;				minDistance.fValue = 8;
+	//sNVPair maxSpeedDistance;			maxSpeedDistance.fValue = 30;
+	//sNVPair maxSpeed;					maxSpeed.fValue = 100;
+	//sNVPair TargetObject;				TargetObject.pMeshObj = findObjectByFriendlyName("xwing");
+	//sNVPair Time;						Time.fValue = 0;
+
+	//vecInitValues.push_back(ObjectToMove);
+	//vecInitValues.push_back(IdealRelPos);
+	//vecInitValues.push_back(minDistance);
+	//vecInitValues.push_back(maxSpeedDistance);
+	//vecInitValues.push_back(maxSpeed);
+	//vecInitValues.push_back(TargetObject);
+	//vecInitValues.push_back(Time);
+
+	//newCommand->Initialize(vecInitValues);
+	//sceneCommandGroup.vecCommands.push_back(newCommand);
 
 
 	//::p_LuaScripts = new cLuaBrain();
@@ -473,89 +484,114 @@ int main(void)
 
 
 
-		{
-
-			cMeshObject* pPlayer = findObjectByFriendlyName("xwing");
-			cMeshObject* pter = findObjectByFriendlyName("terrain");
-
-			float sideLength = 20.0f;
-			cMeshObject* pCubeForBallsToBounceIn = new cMeshObject();
-
-			pCubeForBallsToBounceIn->setDiffuseColour(glm::vec3(0.0f, 1.0f, 0.0f));
-			pCubeForBallsToBounceIn->bDontLight = true;
-			pCubeForBallsToBounceIn->position = pPlayer->position;
-			pCubeForBallsToBounceIn->friendlyName = "CubeBallsBounceIn";
-			pCubeForBallsToBounceIn->meshName = "cube_flat_shaded_xyz_n_uv.ply";		
-			pCubeForBallsToBounceIn->setUniformScale(sideLength / 2);
-			pCubeForBallsToBounceIn->bIsWireFrame = true;
-			glm::mat4 iden = glm::mat4(1.0f);
-			if (b_debugMode) {
-				DrawObject(pCubeForBallsToBounceIn, iden, program);
-			}
-			unsigned long long ID_of_AABB_We_are_in = cAABB::generateID(pPlayer->position, sideLength);
-
-			std::map< unsigned long long /*ID of the AABB*/, cAABB* >::iterator itAABB_Bunny
-				= ::g_pTheTerrain->m_mapAABBs.find(ID_of_AABB_We_are_in);
-
-			if (itAABB_Bunny != ::g_pTheTerrain->m_mapAABBs.end())
-			{
-
-				vec_cur_AABB_tris = itAABB_Bunny->second->vecTriangles;
-
-			}
-			else
-			{
-				if (vec_cur_AABB_tris.size() > 0) {
-					vec_cur_AABB_tris.clear();
-				}
-				
-			}
+		
 
 
-			std::map< unsigned long long /*ID of the AABB*/, cAABB* >::iterator itAABB
-				= ::g_pTheTerrain->m_mapAABBs.begin();
-			for (; itAABB != ::g_pTheTerrain->m_mapAABBs.end(); itAABB++)
-			{
+		cMeshObject* pPlayer = findObjectByFriendlyName("ship");
+		cMeshObject* pter = findObjectByFriendlyName("islands");
+		cMeshObject* pHouse = findObjectByFriendlyName("house");
+
+		
+		
 
 
 
-				cAABB* pCurrentAABB = itAABB->second;
-
-				glm::vec3 cubeCorners[6];
-
-				cubeCorners[0] = pCurrentAABB->getMinXYZ();
-				cubeCorners[1] = pCurrentAABB->getMinXYZ();
-				cubeCorners[2] = pCurrentAABB->getMinXYZ();
-				cubeCorners[3] = pCurrentAABB->getMinXYZ();
-				cubeCorners[4] = pCurrentAABB->getMinXYZ();
-				cubeCorners[5] = pCurrentAABB->getMinXYZ();
-
-				// Max XYZ
-				cubeCorners[1].x += pCurrentAABB->getSideLength();
-				cubeCorners[1].y += pCurrentAABB->getSideLength();
-				cubeCorners[1].z += pCurrentAABB->getSideLength();
-
-				cubeCorners[2].x += pCurrentAABB->getSideLength();
-
-				cubeCorners[3].y += pCurrentAABB->getSideLength();
-
-				cubeCorners[4].z += pCurrentAABB->getSideLength();
-
-				// TODO: And the other corners... 
-				cubeCorners[5].x += pCurrentAABB->getSideLength();
-				cubeCorners[5].y += pCurrentAABB->getSideLength();
 
 
-				if (b_debugMode) {
-					cMeshObject* pDebugCube = findObjectByFriendlyName("DebugCube");
+		//{
 
-					pDebugCube->position = pCurrentAABB->getCentre();
-					pDebugCube->setUniformScale(pCurrentAABB->getSideLength() / 2);
-					glm::mat4 iden = glm::mat4(1.0f);
-					DrawObject(pDebugCube, iden, program);
-				}
-			}
-		}
+		//	cMeshObject* pHouse = findObjectByFriendlyName("house");
+		//	//cMeshObject* pter = findObjectByFriendlyName("islands");
+
+		//	float sideLength = 20.0f;
+		//	cMeshObject* pCubeForBallsToBounceIn = new cMeshObject();
+
+		//	pCubeForBallsToBounceIn->setDiffuseColour(glm::vec3(0.0f, 1.0f, 0.0f));
+		//	pCubeForBallsToBounceIn->bDontLight = true;
+		//	pCubeForBallsToBounceIn->position = pHouse->position;
+		//	pCubeForBallsToBounceIn->friendlyName = "CubeBallsBounceIn";
+		//	pCubeForBallsToBounceIn->meshName = "cube_flat_shaded_xyz_n_uv.ply";
+		//	pCubeForBallsToBounceIn->setUniformScale(sideLength / 2);
+		//	pCubeForBallsToBounceIn->bIsWireFrame = true;
+		//	glm::mat4 iden = glm::mat4(1.0f);
+		//	if (b_debugMode) {
+		//		DrawObject(pCubeForBallsToBounceIn, iden, program);
+		//	}
+		//	unsigned long long ID_of_AABB_We_are_in = cAABB::generateID(pHouse->position, sideLength);
+
+		//	std::map< unsigned long long /*ID of the AABB*/, cAABB* >::iterator itAABB_Bunny
+		//		= ::g_pTheTerrain->m_mapAABBs.find(ID_of_AABB_We_are_in);
+
+		//	if (itAABB_Bunny != ::g_pTheTerrain->m_mapAABBs.end())
+		//	{
+
+		//		vec_cur_AABB_tris = itAABB_Bunny->second->vecTriangles;
+
+		//	}
+		//	else
+		//	{
+		//		if (vec_cur_AABB_tris.size() > 0) {
+		//			vec_cur_AABB_tris.clear();
+		//		}
+
+		//	}
+
+
+		//	std::map< unsigned long long /*ID of the AABB*/, cAABB* >::iterator itAABB
+		//		= ::g_pTheTerrain->m_mapAABBs.begin();
+		//	for (; itAABB != ::g_pTheTerrain->m_mapAABBs.end(); itAABB++)
+		//	{
+
+
+
+		//		cAABB* pCurrentAABB = itAABB->second;
+
+		//		glm::vec3 cubeCorners[6];
+
+		//		cubeCorners[0] = pCurrentAABB->getMinXYZ();
+		//		cubeCorners[1] = pCurrentAABB->getMinXYZ();
+		//		cubeCorners[2] = pCurrentAABB->getMinXYZ();
+		//		cubeCorners[3] = pCurrentAABB->getMinXYZ();
+		//		cubeCorners[4] = pCurrentAABB->getMinXYZ();
+		//		cubeCorners[5] = pCurrentAABB->getMinXYZ();
+
+		//		// Max XYZ
+		//		cubeCorners[1].x += pCurrentAABB->getSideLength();
+		//		cubeCorners[1].y += pCurrentAABB->getSideLength();
+		//		cubeCorners[1].z += pCurrentAABB->getSideLength();
+
+		//		cubeCorners[2].x += pCurrentAABB->getSideLength();
+
+		//		cubeCorners[3].y += pCurrentAABB->getSideLength();
+
+		//		cubeCorners[4].z += pCurrentAABB->getSideLength();
+
+		//		// TODO: And the other corners... 
+		//		cubeCorners[5].x += pCurrentAABB->getSideLength();
+		//		cubeCorners[5].y += pCurrentAABB->getSideLength();
+
+
+		//		if (b_debugMode) {
+		//			cMeshObject* pDebugCube = findObjectByFriendlyName("DebugCube");
+
+		//			pDebugCube->position = pCurrentAABB->getCentre();
+		//			pDebugCube->setUniformScale(pCurrentAABB->getSideLength() / 2);
+		//			glm::mat4 iden = glm::mat4(1.0f);
+		//			DrawObject(pDebugCube, iden, program);
+		//		}
+		//	}
+		//}
+
+
+
+
+
+
+
+
+
+
+
 
 		std::sort(vec_transObj.begin(), vec_transObj.end(), distToCam);
 		
@@ -622,7 +658,7 @@ int main(void)
 
 		//SPIN THE EARTH!!!!
 
-		findObjectByFriendlyName("earth")->adjMeshOrientationEulerAngles(glm::vec3(0.0f, 0.0003f, 0.0f), false);
+		//findObjectByFriendlyName("earth")->adjMeshOrientationEulerAngles(glm::vec3(0.0f, 0.0003f, 0.0f), false);
 		//REFLECTION
 
 		//{
@@ -696,6 +732,12 @@ int main(void)
 		// The physics update loop
 		DoPhysicsUpdate( deltaTime, vec_pObjectsToDraw );
 		sceneCommandGroup.Update(deltaTime);
+		MakePath(deltaTime);
+
+
+
+		AABBB_positioning(pPlayer, pter, vec_cur_AABB_tris1);
+		AABBB_positioning(pHouse, pter, vec_cur_AABB_tris2);
 
 
 		//DELETE LASER BEAMS
@@ -866,7 +908,7 @@ cMeshObject* findObjectByUniqueID(unsigned int ID_to_find)
 
 void LoadTerrainAABB(void)
 {
-	cMeshObject* pTerrain = findObjectByFriendlyName("terrain");
+	cMeshObject* pTerrain = findObjectByFriendlyName("islands");
 
 	sModelDrawInfo terrainMeshInfo;
 	terrainMeshInfo.meshFileName = pTerrain->meshName;
@@ -875,7 +917,7 @@ void LoadTerrainAABB(void)
 
 
 
-	float sideLength = 20.0f;		
+	float sideLength = 30.0f;		
 
 	for (unsigned int triIndex = 0; triIndex != terrainMeshInfo.numberOfTriangles; triIndex++)
 	{
@@ -915,7 +957,7 @@ void LoadTerrainAABB(void)
 			if (itAABB == ::g_pTheTerrain->m_mapAABBs.end())
 			{
 
-				std::cout << cou++ << std::endl;
+				cou++;
 
 
 
@@ -937,7 +979,7 @@ void LoadTerrainAABB(void)
 
 			}
 
-
+			
 
 			itAABB->second->vecTriangles.push_back(curAABBTri);
 
@@ -946,8 +988,239 @@ void LoadTerrainAABB(void)
 	}//for ( unsigned int triIndex
 
 
-
+	std::cout << cou << std::endl;
 	// At runtime, need a "get the triangles" method...
+
+	return;
+}
+
+
+void AABBB_positioning(cMeshObject* obj, cMeshObject* pter, std::vector<cAABB::sAABB_Triangle> &vec_cur_AABB_tris)
+{
+
+
+
+	float sideLength = 30.0f;
+	cMeshObject* pCubeForBallsToBounceIn = new cMeshObject();
+
+	pCubeForBallsToBounceIn->setDiffuseColour(glm::vec3(0.0f, 1.0f, 0.0f));
+	pCubeForBallsToBounceIn->bDontLight = true;
+	pCubeForBallsToBounceIn->position = obj->position;
+	pCubeForBallsToBounceIn->friendlyName = "CubeBallsBounceIn";
+	pCubeForBallsToBounceIn->meshName = "cube_flat_shaded_xyz_n_uv.ply";
+	pCubeForBallsToBounceIn->setUniformScale(sideLength / 2);
+	pCubeForBallsToBounceIn->bIsWireFrame = true;
+	glm::mat4 iden = glm::mat4(1.0f);
+	if (b_debugMode) {
+		DrawObject(pCubeForBallsToBounceIn, iden, program);
+	}
+	unsigned long long ID_of_AABB_We_are_in = cAABB::generateID(obj->position, sideLength);
+
+	std::map< unsigned long long /*ID of the AABB*/, cAABB* >::iterator itAABB_Bunny
+		= ::g_pTheTerrain->m_mapAABBs.find(ID_of_AABB_We_are_in);
+	
+	if (itAABB_Bunny != ::g_pTheTerrain->m_mapAABBs.end())
+	{
+
+		vec_cur_AABB_tris = itAABB_Bunny->second->vecTriangles;
+
+	}
+	else
+	{
+		if (vec_cur_AABB_tris.size() > 0) {
+			vec_cur_AABB_tris.clear();
+		}
+
+	}
+
+
+	std::map< unsigned long long /*ID of the AABB*/, cAABB* >::iterator itAABB
+		= ::g_pTheTerrain->m_mapAABBs.begin();
+	for (; itAABB != ::g_pTheTerrain->m_mapAABBs.end(); itAABB++)
+	{
+
+
+
+		cAABB* pCurrentAABB = itAABB->second;
+
+
+
+		if (b_debugMode) {
+			cMeshObject* pDebugCube = findObjectByFriendlyName("DebugCube");
+
+			pDebugCube->position = pCurrentAABB->getCentre();
+			pDebugCube->setUniformScale(pCurrentAABB->getSideLength() / 2);
+			glm::mat4 iden = glm::mat4(1.0f);
+			DrawObject(pDebugCube, iden, program);
+		}
+	}
+}
+
+
+glm::vec3 ClosestPtPointTriangle2(glm::vec3 p, glm::vec3 a, glm::vec3 b, glm::vec3 c)
+{
+	glm::vec3 ab = b - a;
+	glm::vec3 ac = c - a;
+	glm::vec3 bc = c - b;
+
+	float snom = glm::dot(p - a, ab);
+	float sdenom = glm::dot(p - b, a - b);
+
+	float tnom = glm::dot(p - a, ac);
+	float tdenom = glm::dot(p - c, a - c);
+
+	if (snom <= 0.0f && tnom <= 0.0f) return a; 
+
+	float unom = glm::dot(p - b, bc);
+	float udenom = glm::dot(p - c, b - c);
+
+	if (sdenom <= 0.0f && unom <= 0.0f) return b; 
+	if (tdenom <= 0.0f && udenom <= 0.0f) return c;
+
+
+	glm::vec3 n = glm::cross(b - a, c - a);
+
+
+	float vc = glm::dot(n, glm::cross(a - p, b - p));
+
+	if (vc <= 0.0f && snom >= 0.0f && sdenom >= 0.0f)
+		return a + snom / (snom + sdenom) * ab;
+
+
+	float va = glm::dot(n, glm::cross(b - p, c - p));
+
+
+	if (va <= 0.0f && unom >= 0.0f && udenom >= 0.0f)
+		return b + unom / (unom + udenom) * bc;
+
+
+	float vb = glm::dot(n, glm::cross(c - p, a - p));
+
+
+	if (vb <= 0.0f && tnom >= 0.0f && tdenom >= 0.0f)
+		return a + tnom / (tnom + tdenom) * ac;
+
+	float u = va / (va + vb + vc);
+	float v = vb / (va + vb + vc);
+	float w = 1.0f - u - v; 
+	return u * a + v * b + w * c;
+}
+
+
+void MakePath(double deltaTime)
+{
+
+
+	cMeshObject* pDebugBall = ::findObjectByFriendlyName("DebugSphere");
+	cMeshObject* pShip = findObjectByFriendlyName("ship");
+	cMeshObject* pHouse = findObjectByFriendlyName("house");
+
+
+	glm::mat4 matWorld = glm::mat4(1.0f);
+	DrawObject(pDebugBall, matWorld, ::pTheShaderManager->getIDFromFriendlyName("BasicUberShader"));
+
+
+
+	glm::vec3 direction = pHouse->position - pShip->position;
+
+	direction = glm::normalize(direction);
+
+	glm::vec3 projVelWorldSpace = direction * 10.0f;
+
+
+
+	glm::vec3 projPosition = pShip->position; 
+
+
+
+		//Calculate time
+	float timeTravel = glm::distance(pShip->position, pHouse->position) / 10.0f;
+
+
+	float timeStep = 1.5f;
+	
+
+	for (float time = 0.0; time < timeTravel; time += timeStep)
+	{
+
+		projPosition.x = projPosition.x + (projVelWorldSpace.x * timeStep);
+		projPosition.y = projPosition.y + (projVelWorldSpace.y * timeStep);
+		projPosition.z = projPosition.z + (projVelWorldSpace.z * timeStep);
+
+
+
+		// Draw a sphere at each of these locations...
+		pDebugBall->position = projPosition;
+		//pDebugBall->velocity = glm::vec3(0.0f, -5.0f, 0.0f);
+		pDebugBall->setDiffuseColour(glm::vec3(0.0f, 1.0f, 0.0f));
+		pDebugBall->bIsVisible = true;
+		pDebugBall->setUniformScale(1.0f);
+
+
+
+
+
+		cMeshObject* ter = findObjectByFriendlyName("islands");
+		std::vector<cAABB::sAABB_Triangle> vec_abbs;
+		AABBB_positioning(pDebugBall, ter, vec_abbs);
+
+
+
+		float minDist = 31.0f;
+		float distanceToPoint = 0.0f;
+
+
+		if (vec_abbs.size() > 0) {
+			for (std::vector<cAABB::sAABB_Triangle>::iterator itTri = vec_abbs.begin(); itTri != vec_abbs.end(); itTri++)
+			{
+
+
+
+				cAABB::sAABB_Triangle CurTri = *itTri;
+				glm::vec3 closestPointToTri = ClosestPtPointTriangle2(pDebugBall->position,
+					CurTri.verts[0], CurTri.verts[1], CurTri.verts[2]);
+
+				distanceToPoint = glm::distance(closestPointToTri, pDebugBall->position);
+
+				if (distanceToPoint < minDist)
+				{
+					minDist = distanceToPoint;
+	
+				}
+
+
+			}
+
+
+			if (minDist < 30.0f)
+			{
+
+				pDebugBall->position.y += 30 - minDist;
+			}
+			else
+			{
+			//	pDebugBall->position.y += 20.0f - minDist;
+			}
+
+
+
+
+		}
+
+
+
+
+
+
+
+
+		glm::mat4 matWorld = glm::mat4(1.0f);
+		DrawObject(pDebugBall, matWorld, ::pTheShaderManager->getIDFromFriendlyName("BasicUberShader"));
+
+		pDebugBall->bIsVisible = false;
+
+	}// for ( double time = 0.0;...
+
 
 	return;
 }

@@ -1,0 +1,60 @@
+﻿  UserIO.cpp
+c:\users\nyan\desktop\physicsexam\physicsexam\gameengine\userio.cpp(243): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\nyan\desktop\physicsexam\physicsexam\gameengine\userio.cpp(244): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\nyan\desktop\physicsexam\physicsexam\gameengine\userio.cpp(249): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\users\nyan\desktop\physicsexam\physicsexam\gameengine\userio.cpp(250): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\users\nyan\desktop\physicsexam\physicsexam\gameengine\userio.cpp(252): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\nyan\desktop\physicsexam\physicsexam\gameengine\userio.cpp(253): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\nyan\desktop\physicsexam\physicsexam\gameengine\userio.cpp(368): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\nyan\desktop\physicsexam\physicsexam\gameengine\userio.cpp(370): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\nyan\desktop\physicsexam\physicsexam\gameengine\userio.cpp(372): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\nyan\desktop\physicsexam\physicsexam\gameengine\userio.cpp(374): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\nyan\desktop\physicsexam\physicsexam\gameengine\userio.cpp(376): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\nyan\desktop\physicsexam\physicsexam\gameengine\userio.cpp(378): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\nyan\desktop\physicsexam\physicsexam\gameengine\userio.cpp(475): warning C4244: '-=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+c:\users\nyan\desktop\physicsexam\physicsexam\gameengine\userio.cpp(480): warning C4244: '+=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+c:\users\nyan\desktop\physicsexam\physicsexam\gameengine\userio.cpp(485): warning C4244: '-=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+c:\users\nyan\desktop\physicsexam\physicsexam\gameengine\userio.cpp(490): warning C4244: '+=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+c:\users\nyan\desktop\physicsexam\physicsexam\gameengine\userio.cpp(497): warning C4244: '-=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+c:\users\nyan\desktop\physicsexam\physicsexam\gameengine\userio.cpp(502): warning C4244: '+=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+c:\users\nyan\desktop\physicsexam\physicsexam\gameengine\userio.cpp(507): warning C4244: '-=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+c:\users\nyan\desktop\physicsexam\physicsexam\gameengine\userio.cpp(512): warning C4244: '+=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
+  Generating code
+  5 of 2513 functions ( 0.2%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  GameEngine.vcxproj -> C:\Users\Nyan\Desktop\PhysicsExam\PhysicsExam\x64\Release\GameEngine.exe

@@ -57,8 +57,8 @@ on_off 0
 Name xwinglight
 light_type 1
 In_Out_Angles 5 15
-Position_xyz 83.8503 -33.4991 102.168
-Direction -0.475381 -0.70749 0.522945
+Position_xyz -675 40 520
+Direction 0 0 0
 Attenuation_xyz 0 0.0001 2.1e-05
 Diffuse_rgbw 0.064 0.04 0.8 0
 on_off 1

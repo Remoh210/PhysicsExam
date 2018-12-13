@@ -37,7 +37,8 @@ extern cBasicTextureManager* g_pTheTextureManager;
 extern float xwingSpeed;
 //extern cCommandGroup* luaCommandGroup;
 extern cCommandGroup sceneCommandGroup;
-extern std::vector<cAABB::sAABB_Triangle> vec_cur_AABB_tris;
+extern std::vector<cAABB::sAABB_Triangle> vec_cur_AABB_tris1;
+extern std::vector<cAABB::sAABB_Triangle> vec_cur_AABB_tris2;
 //extern std::vector<cMeshObject*> vec_pObjectsToDraw;
 
 extern glm::vec3 g_CameraEye;	// = glm::vec3( 0.0, 0.0, +10.0f );

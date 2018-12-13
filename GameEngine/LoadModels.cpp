@@ -126,12 +126,12 @@ void LoadModelsIntoScene( std::vector<cMeshObject*> &vec_pObjectsToDraw )
 	{	
 		cMeshObject* pSphereLeft = new cMeshObject();
 		pSphereLeft->setDiffuseColour(glm::vec3(1.0f, 0.0f, 0.0f));
-		pSphereLeft->friendlyName = "DebugSphereLeft";
+		pSphereLeft->friendlyName = "DebugSphereShip";
 		pSphereLeft->meshName = "Sphere_320.ply";
 		pSphereLeft->bIsWireFrame = true;
 		pSphereLeft->bDontLight = true;
 		pSphereLeft->bIsVisible = false;
-		float scale = 1.0f;
+		float scale = 25.0f;
 		pSphereLeft->nonUniformScale = glm::vec3(scale, scale, scale);
 		pSphereLeft->position = glm::vec3(0.0f, 0.0f, 0.0f);
 		pSphereLeft->bIsUpdatedByPhysics = true;
@@ -143,17 +143,63 @@ void LoadModelsIntoScene( std::vector<cMeshObject*> &vec_pObjectsToDraw )
 		
 	}
 
+
+
+
+	{
+		cMeshObject* pSphereLeft = new cMeshObject();
+		pSphereLeft->setDiffuseColour(glm::vec3(1.0f, 0.0f, 0.0f));
+		pSphereLeft->friendlyName = "DebugSphereHouse";
+		pSphereLeft->meshName = "Sphere_320.ply";
+		pSphereLeft->bIsWireFrame = true;
+		pSphereLeft->bDontLight = true;
+		pSphereLeft->bIsVisible = false;
+		float scale = 25.0f;
+		pSphereLeft->nonUniformScale = glm::vec3(scale, scale, scale);
+		pSphereLeft->position = glm::vec3(0.0f, 0.0f, 0.0f);
+		pSphereLeft->bIsUpdatedByPhysics = true;
+		pSphereLeft->bIsDebug = true;
+		pSphereLeft->pDebugRenderer = ::g_pDebugRenderer;
+		pSphereLeft->pTheShape = new sSphere(scale);
+		pSphereLeft->shapeType = cMeshObject::SPHERE;
+		vec_pObjectsToDraw.push_back(pSphereLeft);
+
+	}
+
 	{	
 		cMeshObject* pSphereRight = new cMeshObject();
 		pSphereRight->setDiffuseColour(glm::vec3(0.0f, 0.0f, 1.0f));
-		pSphereRight->friendlyName = "DebugSphereRight";
+		pSphereRight->friendlyName = "pt";
 		pSphereRight->meshName = "Sphere_320.ply";
 		pSphereRight->bIsWireFrame = true;
-		pSphereRight->bIsVisible = false;
+		pSphereRight->bIsVisible = true;
 		pSphereRight->bDontLight = true;
-		float scale = 1.0f;
+		float scale = 0.5f;
 		pSphereRight->nonUniformScale = glm::vec3(scale, scale, scale);
 		pSphereRight->position = glm::vec3(0.0f, 1.0f, 0.0f);
+		pSphereRight->bIsUpdatedByPhysics = true;
+		pSphereRight->bIsDebug = true;
+		pSphereRight->pDebugRenderer = ::g_pDebugRenderer;
+		pSphereRight->pTheShape = new sSphere(scale);
+		pSphereRight->shapeType = cMeshObject::SPHERE;
+		vec_pObjectsToDraw.push_back(pSphereRight);
+
+	}
+
+
+
+
+	{
+		cMeshObject* pSphereRight = new cMeshObject();
+		pSphereRight->setDiffuseColour(glm::vec3(0.0f, 0.0f, 1.0f));
+		pSphereRight->friendlyName = "pt2";
+		pSphereRight->meshName = "Sphere_320.ply";
+		pSphereRight->bIsWireFrame = true;
+		pSphereRight->bIsVisible = true;
+		pSphereRight->bDontLight = true;
+		float scale = 0.5f;
+		pSphereRight->nonUniformScale = glm::vec3(scale, scale, scale);
+		pSphereRight->position = glm::vec3(1.0f, 0.0f, 0.0f);
 		pSphereRight->bIsUpdatedByPhysics = true;
 		pSphereRight->bIsDebug = true;
 		pSphereRight->pDebugRenderer = ::g_pDebugRenderer;
@@ -171,6 +217,26 @@ void LoadModelsIntoScene( std::vector<cMeshObject*> &vec_pObjectsToDraw )
 		pSphereNose->bIsWireFrame = true;
 		pSphereNose->bDontLight = true;
 		pSphereNose->bIsVisible = false;
+		float scale = 1.0f;
+		pSphereNose->nonUniformScale = glm::vec3(scale, scale, scale);
+		pSphereNose->position = glm::vec3(0.0f, 0.0f, 0.0f);
+		pSphereNose->bIsUpdatedByPhysics = true;
+		pSphereNose->bIsDebug = true;
+		pSphereNose->pDebugRenderer = ::g_pDebugRenderer;
+		pSphereNose->pTheShape = new sSphere(scale);
+		pSphereNose->shapeType = cMeshObject::SPHERE;
+		vec_pObjectsToDraw.push_back(pSphereNose);
+
+	}
+
+	{
+		cMeshObject* pSphereNose = new cMeshObject();
+		pSphereNose->setDiffuseColour(glm::vec3(0.0f, 1.0f, 0.0f));
+		pSphereNose->friendlyName = "DebugSphere";
+		pSphereNose->meshName = "Sphere_320.ply";
+		pSphereNose->bIsWireFrame = true;
+		pSphereNose->bDontLight = true;
+		pSphereNose->bIsVisible = true;
 		float scale = 1.0f;
 		pSphereNose->nonUniformScale = glm::vec3(scale, scale, scale);
 		pSphereNose->position = glm::vec3(0.0f, 0.0f, 0.0f);

@@ -71,26 +71,26 @@ void key_callback( GLFWwindow* window,
 	//Reset Scene
 	if (key == GLFW_KEY_G && action == GLFW_PRESS)
 	{
-		b_debugMode = false;
-		b_landingMode = false;
-		swithDebugMode(b_debugMode, vec_pObjectsToDraw);
+		//b_debugMode = false;
+		//b_landingMode = false;
+		//swithDebugMode(b_debugMode, vec_pObjectsToDraw);
 		loadModels("Models2.txt", vec_pObjectsToDraw);
 		loadLights("lights2.txt", LightManager->vecLights);
-		camera.b_controlledByScript = false;
+		//camera.b_controlledByScript = false;
 		loadCameraInfo("camera2.txt");
-		camera.b_controlledByScript = true;
+		//camera.b_controlledByScript = true;
 	}
 
 
 	if (key == GLFW_KEY_H && action == GLFW_PRESS)
 	{
-		SwitchToWireFrame(vec_pObjectsToDraw);
+		//SwitchToWireFrame(vec_pObjectsToDraw);
 	}
 	
 
 	if (glfwGetKey(window, GLFW_KEY_K))
 	{
-		SwitchToSolid(vec_pObjectsToDraw);
+		//SwitchToSolid(vec_pObjectsToDraw);
 	}
 
 
@@ -109,49 +109,42 @@ void key_callback( GLFWwindow* window,
 
 	}
 
-	if (glfwGetKey(window, GLFW_KEY_3))
+	if (glfwGetKey(window, GLFW_KEY_ENTER))
 	{
 		camera.b_controlledByScript = false;
 
 	}
 	if (glfwGetKey(window, GLFW_KEY_4))
 	{
-		camera.b_controlledByScript = true;
+		//camera.b_controlledByScript = true;
 
 	}
 
-	//Shoot Lasers
-	if (glfwGetKey(window, GLFW_KEY_B))
-	{
-		if (!b_landingMode) {
-			shoot();
-		}
-	}
 
 
 	if (key == GLFW_KEY_L && action == GLFW_PRESS)
 	{
-			b_landingMode = true;
+		//	b_landingMode = true;
 	}
 
 	if (key == GLFW_KEY_F && action == GLFW_PRESS)
 	{
-		b_landingMode = false;
+	//	b_landingMode = false;
 	}
 
 	if (glfwGetKey(window, GLFW_KEY_R))
 	{
-		g_pTheTextureManager->filtType = 1;
+		//g_pTheTextureManager->filtType = 1;
 	}
 	if (glfwGetKey(window, GLFW_KEY_T))
 	{
-		g_pTheTextureManager->filtType = 2;
+		//g_pTheTextureManager->filtType = 2;
 	}
 
 	//VISABILITY
 	if (glfwGetKey(window, GLFW_KEY_SEMICOLON ))
 	{
-		switchVis(vec_pObjectsToDraw.at(index));
+		//switchVis(vec_pObjectsToDraw.at(index));
 	}
 
 
@@ -183,7 +176,7 @@ void key_callback( GLFWwindow* window,
 	if (key == GLFW_KEY_9 && action == GLFW_PRESS)
 	{
 		//Move Camera to selected Object
-		camera.Position = vec_pObjectsToDraw[index]->position;
+		//camera.Position = vec_pObjectsToDraw[index]->position;
 
 	}
 
@@ -191,7 +184,7 @@ void key_callback( GLFWwindow* window,
 	{
 
 
-		saveLightInfo("lights2.txt", LightManager->vecLights);
+		//saveLightInfo("lights2.txt", LightManager->vecLights);
 		
 	}
 	
@@ -199,12 +192,12 @@ void key_callback( GLFWwindow* window,
 
 	if (key == GLFW_KEY_9 && action == GLFW_PRESS)
 	{
-		LightManager->vecLights.at(lightIndex)->param2.x = 1.0f;
+		//LightManager->vecLights.at(lightIndex)->param2.x = 1.0f;
 	}
 	//TURN OFF The Light
 	if (key == GLFW_KEY_0 && action == GLFW_PRESS)
 	{
-		LightManager->vecLights.at(lightIndex)->param2.x = 0.0f;
+		//LightManager->vecLights.at(lightIndex)->param2.x = 0.0f;
 	}
 
 
@@ -220,11 +213,11 @@ void key_callback( GLFWwindow* window,
 
 	if (glfwGetKey(window, GLFW_KEY_O))
 	{	
-		LightManager->vecLights.at(lightIndex)->AtenSphere = true;
+		//LightManager->vecLights.at(lightIndex)->AtenSphere = true;
 	}
 	if (glfwGetKey(window, GLFW_KEY_P))
 	{
-		LightManager->vecLights.at(lightIndex)->AtenSphere = false;
+		//LightManager->vecLights.at(lightIndex)->AtenSphere = false;
 	}
 
 
@@ -304,8 +297,8 @@ bool AreAllModifiersUp(GLFWwindow* window)
 
 void ProcessAsynKeys(GLFWwindow* window)
 {
-	const float CAMERA_SPEED_SLOW = 5.0f;
-	const float CAMERA_SPEED_FAST = 10.0f;
+	const float CAMERA_SPEED_SLOW = 0.2f;
+	const float CAMERA_SPEED_FAST = 0.8f;
 
 	// WASD + q = "up", e = down		y axis = up and down
 	//									x axis = left and right
@@ -314,99 +307,39 @@ void ProcessAsynKeys(GLFWwindow* window)
 
 	float cameraSpeed = CAMERA_SPEED_SLOW;
 
-	cMeshObject* pPlayer = findObjectByFriendlyName("xwing");
+	//cMeshObject* pPlayer = findObjectByFriendlyName("xwing");
 
 	if (glfwGetKey(window, GLFW_KEY_SPACE)) 
 	{ 
-		if (xwingSpeed < 100) {
-			xwingSpeed += 0.1f;
-		}
+
 		
 	}
 	else { 
-		if (xwingSpeed > 15) {
-			xwingSpeed -= 0.2f;
-		}
+
 	}
 
 	if (glfwGetKey(window, GLFW_KEY_LEFT))
 	{
-		pPlayer->adjMeshOrientationEulerAngles(glm::vec3(0.0f, 0.007f, 0.0f));
+		//pPlayer->adjMeshOrientationEulerAngles(glm::vec3(0.0f, 0.007f, 0.0f));
 	}
 	if (glfwGetKey(window, GLFW_KEY_RIGHT))
 	{
-		pPlayer->adjMeshOrientationEulerAngles(glm::vec3(0.0, -0.007f, 0.0f));
+		//pPlayer->adjMeshOrientationEulerAngles(glm::vec3(0.0, -0.007f, 0.0f));
 	}
 	if (glfwGetKey(window, GLFW_KEY_UP))
 	{
-		pPlayer->adjMeshOrientationEulerAngles(glm::vec3(0.007f, 0.0f, 0.0f));
+		//pPlayer->adjMeshOrientationEulerAngles(glm::vec3(0.007f, 0.0f, 0.0f));
 
 	}
 	if (glfwGetKey(window, GLFW_KEY_DOWN))
 	{
-		pPlayer->adjMeshOrientationEulerAngles(glm::vec3(-0.007f, 0.0f, 0.0f));
+		//pPlayer->adjMeshOrientationEulerAngles(glm::vec3(-0.007f, 0.0f, 0.0f));
 
 	}
 
 
 
-	if(camera.b_controlledByScript){
-	if (glfwGetKey(window, GLFW_KEY_Q))
-	{
-		pPlayer->adjMeshOrientationEulerAngles(glm::vec3(0.0f, 0.0f, -0.01f));
-	}
-	if (glfwGetKey(window, GLFW_KEY_E))
-	{
-		pPlayer->adjMeshOrientationEulerAngles(glm::vec3(0.0f, 0.0f, 0.01f));
-	}
-
-
-	if (b_landingMode == true)
-	{
-
-
-		if (glfwGetKey(window, GLFW_KEY_W)) {
-
-			glm::vec4 vecForwardDirection_ModelSpace = glm::vec4(0.0f, 0.0f, /**/1.0f/**/, 1.0f);
-
-			glm::quat qPlayer29Rotation = pPlayer->getQOrientation();
-			glm::mat4 matQPlayer29rotation = glm::mat4(qPlayer29Rotation);
-
-			glm::vec4 vecForwardDirection_WorldSpace = matQPlayer29rotation * vecForwardDirection_ModelSpace;
-
-			vecForwardDirection_WorldSpace = glm::normalize(vecForwardDirection_WorldSpace);
-
-
-			pPlayer->accel = vecForwardDirection_WorldSpace * 1.1f;
-			//pPlayer->position += positionAdjustThisFrame;
-		}
-		else if (glm::length(pPlayer->velocity) > 0.001f)
-		{
-			pPlayer->accel = -pPlayer->velocity * 0.5f;
-		}
-		//else { pPlayer->accel = -pPlayer->velocity * 0.5f; }
-
-		if (glfwGetKey(window, GLFW_KEY_A))
-		{
-			pPlayer->adjMeshOrientationEulerAngles(glm::vec3(0.0f, 0.01f, 0.0f));
-		}
-		if (glfwGetKey(window, GLFW_KEY_D))
-		{
-			pPlayer->adjMeshOrientationEulerAngles(glm::vec3(0.0, -0.01f, 0.0f));
-		}
-	//	//if (glfwGetKey(window, GLFW_KEY_E))
-	//	{
-	//		pPlayer->adjMeshOrientationEulerAngles(glm::vec3(0.01f, 0.0f, 0.0f));
-	//
-	//	}
-	//	//if (glfwGetKey(window, GLFW_KEY_Q))
-	//	{
-	//		pPlayer->adjMeshOrientationEulerAngles(glm::vec3(-0.01f, 0.0f, 0.0f));
-	//
-	//	}
-	}
-
-	}
+	
 
 	
 
@@ -429,7 +362,21 @@ void ProcessAsynKeys(GLFWwindow* window)
 	// If no keys are down, move the camera
 	if (AreAllModifiersUp(window))
 	{
-		
+		if (!camera.b_controlledByScript) {
+
+			if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+				camera.ProcessKeyboard(FORWARD, deltaTime);
+			if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+				camera.ProcessKeyboard(BACKWARD, deltaTime);
+			if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+				camera.ProcessKeyboard(LEFT, deltaTime);
+			if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+				camera.ProcessKeyboard(RIGHT, deltaTime);
+			if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
+				camera.ProcessKeyboard(UP, deltaTime);
+			if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
+				camera.ProcessKeyboard(DOWN, deltaTime);
+		}
 
 	}//if(AreAllModifiersUp(window)
 
@@ -441,69 +388,69 @@ void ProcessAsynKeys(GLFWwindow* window)
 		
 		
 		
-		if ( glfwGetKey( window, GLFW_KEY_W ) )	{	LightManager->vecLights.at(lightIndex)->position.z += cameraSpeed;	}
-		if ( glfwGetKey( window, GLFW_KEY_S ) )	{	LightManager->vecLights.at(lightIndex)->position.z -= cameraSpeed;	}
-		if ( glfwGetKey( window, GLFW_KEY_A ) )	{	LightManager->vecLights.at(lightIndex)->position.x -= cameraSpeed;	}
-		if ( glfwGetKey( window, GLFW_KEY_D ) ) {	LightManager->vecLights.at(lightIndex)->position.x += cameraSpeed;	}
-		if ( glfwGetKey( window, GLFW_KEY_Q ) )	{	LightManager->vecLights.at(lightIndex)->position.y += cameraSpeed;	}
-		if ( glfwGetKey( window, GLFW_KEY_E ) )	{	LightManager->vecLights.at(lightIndex)->position.y -= cameraSpeed;	}
+		//if ( glfwGetKey( window, GLFW_KEY_W ) )	{	LightManager->vecLights.at(lightIndex)->position.z += cameraSpeed;	}
+		//if ( glfwGetKey( window, GLFW_KEY_S ) )	{	LightManager->vecLights.at(lightIndex)->position.z -= cameraSpeed;	}
+		//if ( glfwGetKey( window, GLFW_KEY_A ) )	{	LightManager->vecLights.at(lightIndex)->position.x -= cameraSpeed;	}
+		//if ( glfwGetKey( window, GLFW_KEY_D ) ) {	LightManager->vecLights.at(lightIndex)->position.x += cameraSpeed;	}
+		//if ( glfwGetKey( window, GLFW_KEY_Q ) )	{	LightManager->vecLights.at(lightIndex)->position.y += cameraSpeed;	}
+		//if ( glfwGetKey( window, GLFW_KEY_E ) )	{	LightManager->vecLights.at(lightIndex)->position.y -= cameraSpeed;	}
 
 
-		//change colour of the light
-		//if ( glfwGetKey( window, GLFW_KEY_Z ) )	{   LightManager->vecLights.at(lightIndex)->diffuse = glm::vec4(0.0f, 0.0f, 1.0f, 1.0f); 	}//Red
-		//if ( glfwGetKey( window, GLFW_KEY_X ) )	{   LightManager->vecLights.at(lightIndex)->diffuse = glm::vec4(0.0f, 1.0f, 0.0f, 1.0f);	}//Green
-		if ( glfwGetKey( window, GLFW_KEY_C ) )	{   LightManager->vecLights.at(lightIndex)->diffuse = glm::vec4(1.0f, 0.0f, 0.0f, 1.0f);    }//Blue
-		//if ( glfwGetKey( window, GLFW_KEY_V ) )	{	LightManager->vecLights.at(lightIndex)->diffuse = glm::vec4(1.0f, 1.0f, 0.0f, 1.0f);	}
-		//if ( glfwGetKey( window, GLFW_KEY_B ) )	{	LightManager->vecLights.at(lightIndex)->diffuse = glm::vec4(0.0f, 1.0f, 1.0f, 1.0f);	}
+		////change colour of the light
+		////if ( glfwGetKey( window, GLFW_KEY_Z ) )	{   LightManager->vecLights.at(lightIndex)->diffuse = glm::vec4(0.0f, 0.0f, 1.0f, 1.0f); 	}//Red
+		////if ( glfwGetKey( window, GLFW_KEY_X ) )	{   LightManager->vecLights.at(lightIndex)->diffuse = glm::vec4(0.0f, 1.0f, 0.0f, 1.0f);	}//Green
+		//if ( glfwGetKey( window, GLFW_KEY_C ) )	{   LightManager->vecLights.at(lightIndex)->diffuse = glm::vec4(1.0f, 0.0f, 0.0f, 1.0f);    }//Blue
+		////if ( glfwGetKey( window, GLFW_KEY_V ) )	{	LightManager->vecLights.at(lightIndex)->diffuse = glm::vec4(1.0f, 1.0f, 0.0f, 1.0f);	}
+		////if ( glfwGetKey( window, GLFW_KEY_B ) )	{	LightManager->vecLights.at(lightIndex)->diffuse = glm::vec4(0.0f, 1.0f, 1.0f, 1.0f);	}
 
 
-		//change lightype
-		if (glfwGetKey(window, GLFW_KEY_1)) { LightManager->vecLights.at(lightIndex)->SetLightType(sLight::POINT_LIGHT); }//
-		if (glfwGetKey(window, GLFW_KEY_2)) { LightManager->vecLights.at(lightIndex)->SetLightType(sLight::SPOT_LIGHT); }//
+		////change lightype
+		//if (glfwGetKey(window, GLFW_KEY_1)) { LightManager->vecLights.at(lightIndex)->SetLightType(sLight::POINT_LIGHT); }//
+		//if (glfwGetKey(window, GLFW_KEY_2)) { LightManager->vecLights.at(lightIndex)->SetLightType(sLight::SPOT_LIGHT); }//
 
-		//Change Light LookAt
-		if (glfwGetKey(window, GLFW_KEY_R)) { LightManager->vecLights.at(lightIndex)->SetRelativeDirectionByLookAt(vec_pObjectsToDraw.at(index)->position); }
-
-
-
-		//Change SpotCone
-		if (glfwGetKey(window, GLFW_KEY_T))
-		{
-			LightManager->vecLights.at(lightIndex)->param1.y -= 0.1f;
-
-		}
-
-
-		if (glfwGetKey(window, GLFW_KEY_Y))
-		{
-			LightManager->vecLights.at(lightIndex)->param1.y += 0.1f;
-
-		}
-
-
-		if (glfwGetKey(window, GLFW_KEY_U))
-		{
-			LightManager->vecLights.at(lightIndex)->param1.z -= 0.1f;
-		}
-
-
-		if (glfwGetKey(window, GLFW_KEY_I))
-		{
-			LightManager->vecLights.at(lightIndex)->param1.z += 0.1f;
-		}
+		////Change Light LookAt
+		//if (glfwGetKey(window, GLFW_KEY_R)) { LightManager->vecLights.at(lightIndex)->SetRelativeDirectionByLookAt(vec_pObjectsToDraw.at(index)->position); }
 
 
 
+		////Change SpotCone
+		//if (glfwGetKey(window, GLFW_KEY_T))
+		//{
+		//	LightManager->vecLights.at(lightIndex)->param1.y -= 0.1f;
 
-		//change attenuation:
+		//}
 
-		//Linear
-		if ( glfwGetKey( window, GLFW_KEY_LEFT)  )	{ LightManager->vecLights.at(lightIndex)->atten.y *= 1.05f; }
-		if ( glfwGetKey( window, GLFW_KEY_RIGHT) )  { LightManager->vecLights.at(lightIndex)->atten.y *= 0.95f; }
 
-		//Quadratic
-		if ( glfwGetKey( window, GLFW_KEY_DOWN) )   { LightManager->vecLights.at(lightIndex)->atten.z *= 0.95f; }
-		if ( glfwGetKey( window, GLFW_KEY_UP)   )	{ LightManager->vecLights.at(lightIndex)->atten.z *= 1.05f; }
+		//if (glfwGetKey(window, GLFW_KEY_Y))
+		//{
+		//	LightManager->vecLights.at(lightIndex)->param1.y += 0.1f;
+
+		//}
+
+
+		//if (glfwGetKey(window, GLFW_KEY_U))
+		//{
+		//	LightManager->vecLights.at(lightIndex)->param1.z -= 0.1f;
+		//}
+
+
+		//if (glfwGetKey(window, GLFW_KEY_I))
+		//{
+		//	LightManager->vecLights.at(lightIndex)->param1.z += 0.1f;
+		//}
+
+
+
+
+		////change attenuation:
+
+		////Linear
+		//if ( glfwGetKey( window, GLFW_KEY_LEFT)  )	{ LightManager->vecLights.at(lightIndex)->atten.y *= 1.05f; }
+		//if ( glfwGetKey( window, GLFW_KEY_RIGHT) )  { LightManager->vecLights.at(lightIndex)->atten.y *= 0.95f; }
+
+		////Quadratic
+		//if ( glfwGetKey( window, GLFW_KEY_DOWN) )   { LightManager->vecLights.at(lightIndex)->atten.z *= 0.95f; }
+		//if ( glfwGetKey( window, GLFW_KEY_UP)   )	{ LightManager->vecLights.at(lightIndex)->atten.z *= 1.05f; }
 		
 
 	}
@@ -511,18 +458,7 @@ void ProcessAsynKeys(GLFWwindow* window)
 
 	if (IsShiftDown(window))
 	{
-		if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-			camera.ProcessKeyboard(FORWARD, deltaTime);
-		if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-			camera.ProcessKeyboard(BACKWARD, deltaTime);
-		if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-			camera.ProcessKeyboard(LEFT, deltaTime);
-		if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-			camera.ProcessKeyboard(RIGHT, deltaTime);
-		if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
-			camera.ProcessKeyboard(UP, deltaTime);
-		if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
-			camera.ProcessKeyboard(DOWN, deltaTime);
+
 	}
 
 
@@ -530,43 +466,50 @@ void ProcessAsynKeys(GLFWwindow* window)
 	//OBJECT CONTROL***********************************************************
 	if ( IsAltDown(window) )
 	{	//Object Postiton
-		if ( glfwGetKey( window, GLFW_KEY_W	) )	{ vec_pObjectsToDraw.at(index)->position.z -= cameraSpeed * 1.01; }
-		if ( glfwGetKey( window, GLFW_KEY_S ) )	{ vec_pObjectsToDraw.at(index)->position.z += cameraSpeed * 1.01; }
-		if ( glfwGetKey( window, GLFW_KEY_A ) )	{ vec_pObjectsToDraw.at(index)->position.x -= cameraSpeed * 1.01; }
-		if ( glfwGetKey( window, GLFW_KEY_D ) ) { vec_pObjectsToDraw.at(index)->position.x += cameraSpeed * 1.01; }
-		if ( glfwGetKey( window, GLFW_KEY_Q ) )	{ vec_pObjectsToDraw.at(index)->position.y -= cameraSpeed * 1.01; }
-		if ( glfwGetKey( window, GLFW_KEY_E ) )	{ vec_pObjectsToDraw.at(index)->position.y += cameraSpeed * 1.01; }
-
-		////Object Rotation
-		if (glfwGetKey(window, GLFW_KEY_RIGHT)) { vec_pObjectsToDraw.at(index)->adjMeshOrientationEulerAngles(0.0f, 0.1f, 0.0f, false); }
-		if (glfwGetKey(window, GLFW_KEY_LEFT)) {vec_pObjectsToDraw.at(index)->adjMeshOrientationEulerAngles(0.0f, -0.1f, 0.0f, false);}
-		//if ( glfwGetKey( window, GLFW_KEY_UP ) )	{ vec_pObjectsToDraw.at(index)->postRotation.x += 0.1f; }
-		//if ( glfwGetKey( window, GLFW_KEY_DOWN ) )	{ vec_pObjectsToDraw.at(index)->postRotation.x -= 0.1f; }
-		//if ( glfwGetKey( window, GLFW_KEY_X ) )		{ vec_pObjectsToDraw.at(index)->postRotation.z += 0.1f; }
-		//if ( glfwGetKey( window, GLFW_KEY_C ) )		{ vec_pObjectsToDraw.at(index)->postRotation.z -= 0.1f; }
-
-		//if (glfwGetKey(window, GLFW_KEY_V)) { vec_pObjectsToDraw.at(index)->nonUniformScale += 0.2f; }
-		//if (glfwGetKey(window, GLFW_KEY_B)) { vec_pObjectsToDraw.at(index)->nonUniformScale -= 0.2f; }
-
+		cMeshObject* pPlayer = findObjectByFriendlyName("ship");
+		cMeshObject* pHouse = findObjectByFriendlyName("house");
+		
+		if ( glfwGetKey( window, GLFW_KEY_W	) )	
+		{ 
+			pPlayer->position.y -= 1.0f;
+			pPlayer->position.z -= cameraSpeed * 8.0;
+		}
+		if ( glfwGetKey( window, GLFW_KEY_S ) )	
+		{ 
+			pPlayer->position.y -= 1.0f;;
+			pPlayer->position.z += cameraSpeed * 8.0;
+		}
+		if ( glfwGetKey( window, GLFW_KEY_A ) )	
+		{
+			pPlayer->position.y -= 1.0f;
+			pPlayer->position.x -= cameraSpeed * 8.0;
+		}
+		if ( glfwGetKey( window, GLFW_KEY_D ) ) 
+		{ 
+			pPlayer->position.y -= 1.0f;
+			pPlayer->position.x += cameraSpeed * 8.0;
+		}
 
 
 		if (glfwGetKey(window, GLFW_KEY_UP))
 		{
-			if (vec_pObjectsToDraw.at(index)->vecTextures.size() > 1)
-			{
-				vec_pObjectsToDraw.at(index)->vecTextures.at(1).strength += 0.002f;
-				vec_pObjectsToDraw.at(index)->vecTextures.at(0).strength -= 0.002f;
-			}
-			else { std::cout << vec_pObjectsToDraw.at(index)->friendlyName << " has only one texture" << std::endl; }
-		}
+			pHouse->position.y -= 1.0f;
+			pHouse->position.z -= cameraSpeed * 8.0;
+		}	
 		if (glfwGetKey(window, GLFW_KEY_DOWN))
 		{
-			if (vec_pObjectsToDraw.at(index)->vecTextures.size() > 1)
-			{
-				vec_pObjectsToDraw.at(index)->vecTextures.at(1).strength -= 0.002f;
-				vec_pObjectsToDraw.at(index)->vecTextures.at(0).strength += 0.002f;
-			}
-			else { std::cout << vec_pObjectsToDraw.at(index)->friendlyName << " has only one texture" << std::endl; }
+			pHouse->position.y -= 1.0f;
+			pHouse->position.z += cameraSpeed * 8.0;
+		}
+		if (glfwGetKey(window, GLFW_KEY_LEFT))
+		{
+			pHouse->position.y -= 1.0f;
+			pHouse->position.x -= cameraSpeed * 8.0;
+		}
+		if (glfwGetKey(window, GLFW_KEY_RIGHT))
+		{
+			pHouse->position.y -= 1.0f;
+			pHouse->position.x += cameraSpeed * 8.0;
 		}
 
 		

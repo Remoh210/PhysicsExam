@@ -85,62 +85,124 @@ void DoPhysicsUpdate( double fDeltaTime,
 
 
 
-	if (vec_cur_AABB_tris.size() > 0)
-	{
+
 		// Test for collisions
 		for (std::vector< cMeshObject* >::iterator itObjectA = vec_pObjectsToDraw.begin();
 			itObjectA != vec_pObjectsToDraw.end(); itObjectA++)
 		{
 			cMeshObject* pCurObj = *itObjectA;
 
-			if (pCurObj->bIsUpdatedByPhysics) {
+			if (pCurObj->bIsUpdatedByPhysics) 
+			{
 
-				if (pCurObj->shapeType == cMeshObject::SPHERE && !pCurObj->bIsProjectile)
+				if (pCurObj->shapeType == cMeshObject::SPHERE)
 				{
 					sSphere* pSphereA = (sSphere*)(pCurObj->pTheShape);
-					
-					for (std::vector<cAABB::sAABB_Triangle>::iterator itTri = vec_cur_AABB_tris.begin(); itTri != vec_cur_AABB_tris.end(); itTri++)
+
+					if (pCurObj->friendlyName == "DebugSphereShip")
 					{
-
-						cAABB::sAABB_Triangle CurTri = *itTri;
-						glm::vec3 closestPointToTri = ClosestPtPointTriangle(pCurObj->position,
-						CurTri.verts[0], CurTri.verts[1], CurTri.verts[2]);
-
-
-						if (glm::distance(closestPointToTri, pCurObj->position) <= pSphereA->radius)
+						if (vec_cur_AABB_tris1.size() > 0)
 						{
-							cMeshObject* pPlayer = findObjectByFriendlyName("xwing");
-							//pCurObj->velocity = glm::vec3(0.0f);
-							if (pCurObj->friendlyName == "DebugSphereLeft") 
-							{ 
-								pCurObj->bIsVisible = true;
-								std::cout << " collision Left Wing" << std::endl;
-								pPlayer->bIsUpdatedByPhysics = false;
-								b_landingMode = true;
+
+							float minDist = 20.0f;
+							float distanceToPoint = 0.0f;
+							glm::vec3 TheclosestPointToTri;
+							for (std::vector<cAABB::sAABB_Triangle>::iterator itTri = vec_cur_AABB_tris1.begin(); itTri != vec_cur_AABB_tris1.end(); itTri++)
+							{
+
+								cAABB::sAABB_Triangle CurTri = *itTri;
+								glm::vec3 closestPointToTri = ClosestPtPointTriangle(pCurObj->position,
+									CurTri.verts[0], CurTri.verts[1], CurTri.verts[2]);
+
+								distanceToPoint = glm::distance(closestPointToTri, pCurObj->position);
+
+								if (distanceToPoint < minDist)
+								{
+									minDist = distanceToPoint;
+									TheclosestPointToTri = closestPointToTri;
+								}
+
+
 							}
-							if (pCurObj->friendlyName == "DebugSphereRight") 
-							{ 
-								pCurObj->bIsVisible = true;
-								std::cout << " collision Right Wing " << std::endl;
-								pPlayer->bIsUpdatedByPhysics = false;
-								b_landingMode = true;
+
+							findObjectByFriendlyName("pt")->position = TheclosestPointToTri;
+
+							if (minDist < pSphereA->radius)
+							{
+
+								findObjectByFriendlyName("ship")->position.y += pSphereA->radius - minDist;
+								//break;
 							}
-							if (pCurObj->friendlyName == "DebugSphereNose") 
-							{ 
-								pCurObj->bIsVisible = true;
-								std::cout << " collision Nose " << std::endl;
-								pPlayer->bIsUpdatedByPhysics = false;
-								b_landingMode = true;
+							else
+							{
+								findObjectByFriendlyName("ship")->position.y += pSphereA->radius - minDist;
+								//break;
 							}
+
 						}
 
-					}
+					}//if ship
+
+
+					if (pCurObj->friendlyName == "DebugSphereHouse")
+
+					{
+
+
+						if (vec_cur_AABB_tris2.size() > 0)
+						{
+
+							float minDist = 30.0f;
+							float distanceToPoint = 0.0f;
+							glm::vec3 TheclosestPointToTri;
+							for (std::vector<cAABB::sAABB_Triangle>::iterator itTri = vec_cur_AABB_tris2.begin(); itTri != vec_cur_AABB_tris2.end(); itTri++)
+							{
+
+								cAABB::sAABB_Triangle CurTri = *itTri;
+								glm::vec3 closestPointToTri = ClosestPtPointTriangle(pCurObj->position,
+									CurTri.verts[0], CurTri.verts[1], CurTri.verts[2]);
+
+								distanceToPoint = glm::distance(closestPointToTri, pCurObj->position);
+
+								if (distanceToPoint < minDist)
+								{
+									minDist = distanceToPoint;
+									TheclosestPointToTri = closestPointToTri;
+								}
+
+
+							}
+
+							findObjectByFriendlyName("pt2")->position = TheclosestPointToTri;
+
+							if (minDist < pSphereA->radius)
+							{
+
+								findObjectByFriendlyName("house")->position.y += pSphereA->radius - minDist;
+								break;
+							}
+							else
+							{
+								findObjectByFriendlyName("house")->position.y += pSphereA->radius - minDist;
+								break;
+							}
+
+						}
+
+
+
+					}//if house
 				}
 			}
 
 
+		
 		}
-	}
+
+
+
+
+
 
 	//PlayerColTest(fDeltaTime, program);
 
